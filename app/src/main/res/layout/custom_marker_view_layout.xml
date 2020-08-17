@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".MainActivity"
+    android:background="@color/colorPrimary">
+
+    <Button
+        android:id="@+id/tvContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:inputType="textMultiLine"
+        android:layout_marginTop="3.5dp"
+        android:layout_marginLeft="2.5dp"
+        android:layout_marginRight="2.5dp"
+        android:layout_marginBottom="3.5dp"
+        android:text=""
+        android:background="@color/colorPrimary"
+        android:textSize="12dp"
+        android:textColor="@android:color/white"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:clickable="true"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+</RelativeLayout>

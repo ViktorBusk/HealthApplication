@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="health_application">Health Application</string>
+    <string name="add_data">Add data</string>
+</resources>
