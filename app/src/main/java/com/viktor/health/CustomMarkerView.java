@@ -2,7 +2,11 @@ package com.viktor.health;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -16,36 +20,31 @@ import com.github.mikephil.charting.utils.MPPointF;
 
 public class CustomMarkerView extends MarkerView {
 
-    private Button tvContent;
-    private Entry entry;
-    boolean showing;
+    private TextView tvContent;
+    private MPPointF drawingPoint;
+    private MPPointF size;
 
     public CustomMarkerView(Context context, int layoutResource) {
         super(context, layoutResource);
         // find your layout components
-        tvContent = (Button) findViewById(R.id.tvContent);
-        showing = true;
+        tvContent = (TextView) findViewById(R.id.tvContent);
+        tvContent.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
+        drawingPoint = new MPPointF(-1, -1);
+        size = new MPPointF(tvContent.getMeasuredWidth(), tvContent.getMeasuredHeight());
     }
 
     // callbacks everytime the MarkerView is redrawn, can be used to update the
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
+        drawingPoint.x = highlight.getDrawX();
+        drawingPoint.y = highlight.getDrawY();
         DayEatingData dayEatingData = (DayEatingData)e.getData();
-
         tvContent.setText("Pain: " +  dayEatingData.painLevel + "\n" +
                         "Calories: " + dayEatingData.calories + "\n" +
                         "Carbs: " + dayEatingData.carbs + "\n" +
                         "Fat: " + dayEatingData.fat + "\n" +
                         "Protein: " + dayEatingData.protein);
-
-        // this will perform necessary layouting
-        if(entry == e && showing)
-        {
-            Toast.makeText(getContext(), "New activity " + showing, Toast.LENGTH_SHORT).show();
-        }
-        else showing = !showing;
-        entry = e;
         super.refreshContent(e, highlight);
     }
 
@@ -60,5 +59,14 @@ public class CustomMarkerView extends MarkerView {
         }
 
         return mOffset;
+    }
+    public final MPPointF getDrawingPoint() {
+        return drawingPoint;
+    }
+    public void setDrawingPoint(float x, float y) {
+        drawingPoint.x = x;drawingPoint.y = y;
+    }
+    public final MPPointF getSize() {
+        return size;
     }
 }

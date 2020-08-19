@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -40,6 +41,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.MPPointD;
+import com.github.mikephil.charting.utils.MPPointF;
 import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
@@ -54,17 +56,46 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final ConstraintLayout layout = findViewById(R.id.chart_layout);
+        final Button button = findViewById(R.id.button1);
         final LineChart chart =  findViewById(R.id.test_chart);
         final TextView sticky = findViewById(R.id.sticky_label);
+        final CustomMarkerView marker = new CustomMarkerView(this, R.layout.custom_marker_view_layout);
 
-        chart.setTouchEnabled(true);
-        /*chart.setOnClickListener(new View.OnClickListener() {
+        final float threshHoldDistance = 70.f;
+
+        //Make a reference to the old listener
+        final View.OnTouchListener customListener = chart.getOnTouchListener();
+
+        //Add event listener to main button
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                chart.setBackgroundColor(Color.CYAN);
+            public void onClick(View view) {
+                openActivity2();
             }
-        });*/
+        });
 
+        //Make the new one
+        chart.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                customListener.onTouch(v, event);
+                float x = event.getX();
+                float y = event.getY();
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+
+                        if(getDistance(x, y, marker.getDrawingPoint().x, marker.getDrawingPoint().y - 100) < threshHoldDistance) {
+                            openActivity3();
+                            marker.setDrawingPoint(-1.f, -1.f);
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
+        //Init colors from XML-file
         TypedValue typedValue = new TypedValue();
         getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
         final int primaryColorDark = typedValue.data;
@@ -90,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
             data.add(e);
         }
 
+        //Make dataset
         LineDataSet lds = new LineDataSet(data, "data");
 
         //Smooth curves
@@ -116,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Set data to chart
         chart.setData(ld);
+
+        //X-axis
         final float textSize = 20f;
         final XAxis xa = chart.getXAxis();
         xa.setGranularity(1f);
@@ -126,16 +160,19 @@ public class MainActivity extends AppCompatActivity {
         xa.setTextSize(textSize);
         xa.setDrawGridLines(true);
 
-        //Marker view
-        final IMarker marker = new CustomMarkerView(this, R.layout.custom_marker_view_layout);
-        chart.setMarker(marker);
+        //Y-axis
+        final YAxis ya = chart.getAxisLeft();
+        ya.setAxisMaxValue(10.f);
 
+        //Init chart
         chart.setTouchEnabled(true);
         chart.getAxisLeft().setTextColor(colorAccent);
         chart.getXAxis().setTextColor(colorAccent);
-        chart.setPinchZoom(false);
+        chart.setPinchZoom(true);
+        chart.setDoubleTapToZoomEnabled(false);
         chart.zoom(amount / 6, 0.5f, 0f, 0f);
         sticky.setTextSize(textSize);
+        chart.setMarker(marker);
 
         ViewTreeObserver vto = layout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -178,6 +215,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openActivity3(){
+        Intent intent = new Intent(this, MainActivity3.class);
+        startActivity(intent);
+    }
+
+    public float getDistance(float x1, float y1, float x2, float y2) {
+        return (float)Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
+    }
 }
 
 
