@@ -50,18 +50,29 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static DayEatingData dayEatingData;
+    public static ConstraintLayout layout;
+    public static Button button;
+    public static LineChart chart;
+    public static TextView sticky;
+    public static CustomMarkerView marker;
+
+    public static final float THRESHOLD_DISTANCE = 70.f;
+    public static final float HEIGHT = 100.f;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ConstraintLayout layout = findViewById(R.id.chart_layout);
-        final Button button = findViewById(R.id.button1);
-        final LineChart chart =  findViewById(R.id.test_chart);
-        final TextView sticky = findViewById(R.id.sticky_label);
-        final CustomMarkerView marker = new CustomMarkerView(this, R.layout.custom_marker_view_layout);
+        layout = findViewById(R.id.chart_layout);
+        button = findViewById(R.id.button1);
+        chart = findViewById(R.id.test_chart);
+        sticky = findViewById(R.id.sticky_label);
+        marker = new CustomMarkerView(this, R.layout.custom_marker_view_layout);
 
         final float threshHoldDistance = 70.f;
+        final float height = 100.f;
 
         //Make a reference to the old listener
         final View.OnTouchListener customListener = chart.getOnTouchListener();
@@ -86,7 +97,8 @@ public class MainActivity extends AppCompatActivity {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
 
-                        if(getDistance(x, y, marker.getDrawingPoint().x, marker.getDrawingPoint().y - 100) < threshHoldDistance) {
+                        if(getDistance(x, y, marker.getDrawingPoint().x, marker.getDrawingPoint().y - HEIGHT) < THRESHOLD_DISTANCE) {
+                            MainActivity.dayEatingData = marker.dayEatingData;
                             openActivity3();
                             marker.setDrawingPoint(-1.f, -1.f);
                         }
@@ -220,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public float getDistance(float x1, float y1, float x2, float y2) {
+    public static float getDistance(float x1, float y1, float x2, float y2) {
         return (float)Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
     }
 }

@@ -22,7 +22,7 @@ public class CustomMarkerView extends MarkerView {
 
     private TextView tvContent;
     private MPPointF drawingPoint;
-    private MPPointF size;
+    public DayEatingData dayEatingData;
 
     public CustomMarkerView(Context context, int layoutResource) {
         super(context, layoutResource);
@@ -30,7 +30,6 @@ public class CustomMarkerView extends MarkerView {
         tvContent = (TextView) findViewById(R.id.tvContent);
         tvContent.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
         drawingPoint = new MPPointF(-1, -1);
-        size = new MPPointF(tvContent.getMeasuredWidth(), tvContent.getMeasuredHeight());
     }
 
     // callbacks everytime the MarkerView is redrawn, can be used to update the
@@ -39,7 +38,7 @@ public class CustomMarkerView extends MarkerView {
     public void refreshContent(Entry e, Highlight highlight) {
         drawingPoint.x = highlight.getDrawX();
         drawingPoint.y = highlight.getDrawY();
-        DayEatingData dayEatingData = (DayEatingData)e.getData();
+        dayEatingData = (DayEatingData)e.getData();
         tvContent.setText("Pain: " +  dayEatingData.painLevel + "\n" +
                         "Calories: " + dayEatingData.calories + "\n" +
                         "Carbs: " + dayEatingData.carbs + "\n" +
@@ -65,8 +64,5 @@ public class CustomMarkerView extends MarkerView {
     }
     public void setDrawingPoint(float x, float y) {
         drawingPoint.x = x;drawingPoint.y = y;
-    }
-    public final MPPointF getSize() {
-        return size;
     }
 }
