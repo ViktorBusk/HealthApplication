@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-//TODO: add animations
+//TODO: add animations, add dayEatingData to views
 
 public class MainActivity3 extends AppCompatActivity {
 

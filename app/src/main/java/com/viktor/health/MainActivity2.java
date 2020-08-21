@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+//TODO: Add animations, add time- and date-picker, add number-picker for values, save data to FireBase
+
 public class MainActivity2 extends AppCompatActivity {
 
     /*
