@@ -3,7 +3,7 @@ package com.viktor.health;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-public class Utils {
+public abstract class Utils {
 
     static float map(float value,
                  float start1, float stop1,

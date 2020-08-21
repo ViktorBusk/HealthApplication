@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
     public static LineChart chart;
     public static TextView sticky;
     public static CustomMarkerView marker;
-    public static View rootView;
 
     //Colors
     public static int primaryColorDark;
@@ -63,23 +62,62 @@ public class MainActivity extends AppCompatActivity {
     public static  int colorAccent;
 
     //Touch
-    public static float THRESHOLD_DISTANCE = 64.f;
-    public static final float HEIGHT = 96.f;
+    private static float THRESHOLD_DISTANCE = 64.f;
+    private static final float HEIGHT = 96.f;
+
+    //Chart
+    private List<Entry> data;
+    private final int amount = 100;
+    private LineDataSet lds;
+    private LineData ld;
+    private XAxis xa;
+    private YAxis ya;
+    private final float textSize = 20f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initActivity();
+    }
+
+    private void initActivity(){
+        initViews();
+        initColors();
+        initChartTouchListener();
+        addDataToList();
+        initLineData();
+        setDataToChart();
+        initXAxis();
+        initYaxis();
+        initChart();
+    }
+
+    private void initViews(){
         layout = findViewById(R.id.chart_layout);
         button = findViewById(R.id.button1);
         chart = findViewById(R.id.test_chart);
         sticky = findViewById(R.id.sticky_label);
         marker = new CustomMarkerView(this, R.layout.custom_marker_view_layout);
-        rootView = getWindow().getDecorView().findViewById(android.R.id.content);
-        final float threshHoldDistance = 70.f;
-        final float height = 100.f;
+    }
 
+    private void initColors() {
+        //Init colors from XML-file
+        TypedValue typedValue = new TypedValue();
+        getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
+        primaryColorDark = typedValue.data;
+
+        typedValue = new TypedValue();
+        getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        primaryColor = typedValue.data;
+
+        typedValue = new TypedValue();
+        getTheme().resolveAttribute(R.attr.colorAccent, typedValue, true);
+        colorAccent = typedValue.data;
+    }
+
+    private void initChartTouchListener() {
         //Make a reference to the old listener
         final View.OnTouchListener customListener = chart.getOnTouchListener();
 
@@ -117,35 +155,22 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        //Init colors from XML-file
-        TypedValue typedValue = new TypedValue();
-        getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
-         primaryColorDark = typedValue.data;
+    }
 
-        typedValue = new TypedValue();
-        getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
-        primaryColor = typedValue.data;
-
-        typedValue = new TypedValue();
-        getTheme().resolveAttribute(R.attr.colorAccent, typedValue, true);
-        colorAccent = typedValue.data;
-
-        //Add data to list
-        List<Entry> data = new ArrayList<>();
-        int amount = 100;
+    private void addDataToList() {
+        data = new ArrayList<>();
         for (int i = 0; i < amount; ++i) {
             Entry e = new Entry(i, (float)(Math.random() * 10));
-            if(i == 3)
-                e.setY(10f);
             //Simple testing
             List<Meal> meals = new ArrayList<>();
             meals.add(new Meal("3 st Ägg", null, e.getY(), 215, 0, 14, 19));
             e.setData(new DayEatingData(meals.toArray(new Meal[0])));
             data.add(e);
         }
+    }
 
-        //Make dataset
-        LineDataSet lds = new LineDataSet(data, "data");
+    private void initLineData() {
+        lds = new LineDataSet(data, "data");
 
         //Smooth curves
         lds.setMode(LineDataSet.Mode.CUBIC_BEZIER);
@@ -157,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
         lds.setCircleColor(primaryColor);
         lds.setCircleRadius(3.f);
         lds.setLineWidth(0f);
-        LineData ld = new LineData(lds);
+        ld = new LineData(lds);
         ld.setValueTextSize(15.f);
 
         lds.setValueTextColor(Color.BLACK);
@@ -168,13 +193,16 @@ public class MainActivity extends AppCompatActivity {
         lds.setDrawFilled(true);
         Drawable drawable = ContextCompat.getDrawable(this, R.drawable.gradient);
         lds.setFillDrawable(drawable);
+    }
 
+    private void setDataToChart(){
         //Set data to chart
         chart.setData(ld);
+    }
 
+    private void initXAxis(){
         //X-axis
-        final float textSize = 20f;
-        final XAxis xa = chart.getXAxis();
+        xa = chart.getXAxis();
         xa.setGranularity(1f);
         xa.setGranularityEnabled(true);
         xa.setValueFormatter(new StickyDateAxisValueFormatter(chart, sticky));
@@ -182,11 +210,15 @@ public class MainActivity extends AppCompatActivity {
         xa.setPosition(XAxis.XAxisPosition.BOTTOM);
         xa.setTextSize(textSize);
         xa.setDrawGridLines(true);
+    }
 
+    private void initYaxis() {
         //Y-axis
-        final YAxis ya = chart.getAxisLeft();
+        ya = chart.getAxisLeft();
         ya.setAxisMaxValue(10.f);
+    }
 
+    private void initChart() {
         //Init chart
         chart.setTouchEnabled(true);
         chart.getAxisLeft().setTextColor(colorAccent);
