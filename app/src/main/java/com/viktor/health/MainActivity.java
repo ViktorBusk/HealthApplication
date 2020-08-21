@@ -1,70 +1,48 @@
 package com.viktor.health;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.Pair;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
-import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.IMarker;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.MPPointD;
-import com.github.mikephil.charting.utils.MPPointF;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    //Views
     public static DayEatingData dayEatingData;
     public static ConstraintLayout layout;
     public static Button button;
     public static LineChart chart;
     public static TextView sticky;
     public static CustomMarkerView marker;
-
     //Colors
     public static int primaryColorDark;
     public static int primaryColor;
-    public static  int colorAccent;
-
+    public static int colorAccent;
     //Touch
-    private static float THRESHOLD_DISTANCE = 64.f;
+    private static final float THRESHOLD_DISTANCE = 64.f;
     private static final float HEIGHT = 96.f;
-
     //Chart
     private List<Entry> data;
     private final int amount = 100;
@@ -72,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private LineData ld;
     private XAxis xa;
     private YAxis ya;
-    private final float textSize = 20f;
+    private static final float TEXT_SIZE = 20f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,14 +61,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initActivity(){
+        //Views & Colors
         initViews();
         initColors();
+        //Event listeners
+        initButtonOnClickListener();
         initChartTouchListener();
+        //Data
         addDataToList();
         initLineData();
         setDataToChart();
+        //Axes
         initXAxis();
         initYaxis();
+        //Chart
         initChart();
     }
 
@@ -117,10 +101,7 @@ public class MainActivity extends AppCompatActivity {
         colorAccent = typedValue.data;
     }
 
-    private void initChartTouchListener() {
-        //Make a reference to the old listener
-        final View.OnTouchListener customListener = chart.getOnTouchListener();
-
+    private void initButtonOnClickListener(){
         //Add event listener to main button
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +109,11 @@ public class MainActivity extends AppCompatActivity {
                 openActivity2();
             }
         });
+    }
 
+    private void initChartTouchListener() {
+        //Make a reference to the old listener
+        final View.OnTouchListener customListener = chart.getOnTouchListener();
         //Make the new one
         chart.setOnTouchListener(new View.OnTouchListener() {
 
@@ -208,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         xa.setValueFormatter(new StickyDateAxisValueFormatter(chart, sticky));
 
         xa.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xa.setTextSize(textSize);
+        xa.setTextSize(TEXT_SIZE);
         xa.setDrawGridLines(true);
     }
 
@@ -226,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
         chart.setPinchZoom(true);
         chart.setDoubleTapToZoomEnabled(false);
         chart.zoom(amount / 6, 0.5f, 0f, 0f);
-        sticky.setTextSize(textSize);
+        sticky.setTextSize(TEXT_SIZE);
         chart.setMarker(marker);
 
         ViewTreeObserver vto = layout.getViewTreeObserver();
@@ -244,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                 // WARNING: The 2.2 here was calibrated to the screen I was using. Make sure it works
                 // on all resolutions and densities. There may be a pixel/dp inconsistency in here somewhere.
                 // The 10f is from the extra bottom offset (set below).
-                float ty = chart.getY() + chart.getMeasuredHeight() - rho * yo - 2.2f * textSize - 10f;
+                float ty = chart.getY() + chart.getMeasuredHeight() - rho * yo - 2.2f * TEXT_SIZE - 10f;
                 float tx = chart.getX() + rho * xo;
 
                 sticky.setTranslationY(ty);
@@ -254,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
 
         sticky.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
 
-        chart.getAxisLeft().setTextSize(textSize);
+        chart.getAxisLeft().setTextSize(TEXT_SIZE);
         chart.setExtraBottomOffset(10f);
 
         chart.getAxisRight().setEnabled(false);
