@@ -41,7 +41,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/icons8_bar_chart_64"></ImageView>
+                android:src="@drawable/icons8_bar_chart_3d_64"></ImageView>
         </RelativeLayout>
 
         <GridLayout

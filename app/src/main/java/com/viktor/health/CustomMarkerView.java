@@ -44,6 +44,8 @@ public class CustomMarkerView extends MarkerView {
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
+        this.setY(e.getY());
+        this.setX(e.getX());
         drawingPoint.x = highlight.getDrawX();
         drawingPoint.y = highlight.getDrawY();
         dayEatingData = (DayEatingData) e.getData();
@@ -79,22 +81,15 @@ public class CustomMarkerView extends MarkerView {
         if (dayEatingData.painLevel < 5) {
             int startColor = ContextCompat.getColor(getContext(), R.color.startColor);
             int endColor = ContextCompat.getColor(getContext(), R.color.centerColor);
-            float ratio = map(dayEatingData.painLevel, 0, 5, 0, 10)/10;
+            float ratio = Utils.map(dayEatingData.painLevel, 0, 5, 0, 10)/10;
             //tvContent.getBackground().setColorFilter(ColorUtils.blendARGB(startColor, endColor, ratio), PorterDuff.Mode.MULTIPLY);
         }
         //From yellow to red
         else {
             int startColor = ContextCompat.getColor(getContext(), R.color.centerColor);
             int endColor = ContextCompat.getColor(getContext(), R.color.endColor);
-            float ratio = map(dayEatingData.painLevel, 5, 10, 0, 10)/10;
+            float ratio = Utils.map(dayEatingData.painLevel, 5, 10, 0, 10)/10;
             //tvContent.getBackground().setColorFilter(ColorUtils.blendARGB(startColor, endColor, ratio), PorterDuff.Mode.MULTIPLY);
         }
-    }
-    static float map(float value,
-                     float start1, float stop1,
-                     float start2, float stop2) {
-        float outgoing =
-                start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
-        return outgoing;
     }
 }

@@ -42,7 +42,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.MPPointD;
 import com.github.mikephil.charting.utils.MPPointF;
-import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     public static LineChart chart;
     public static TextView sticky;
     public static CustomMarkerView marker;
+    public static View rootView;
 
     //Colors
     public static int primaryColorDark;
@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
     public static  int colorAccent;
 
     //Touch
-    public static final float THRESHOLD_DISTANCE = 64.f;
-    public static final float HEIGHT = 100.f;
+    public static float THRESHOLD_DISTANCE = 64.f;
+    public static final float HEIGHT = 96.f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         chart = findViewById(R.id.test_chart);
         sticky = findViewById(R.id.sticky_label);
         marker = new CustomMarkerView(this, R.layout.custom_marker_view_layout);
-
+        rootView = getWindow().getDecorView().findViewById(android.R.id.content);
         final float threshHoldDistance = 70.f;
         final float height = 100.f;
 
@@ -100,10 +100,14 @@ public class MainActivity extends AppCompatActivity {
                 float x = event.getX();
                 float y = event.getY();
 
+                float paddingTop = 0f;
+
+                if(marker.getDrawingPoint().y <= 172.07f)
+                    paddingTop+=(172.07f - marker.getDrawingPoint().y);
+
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-
-                        if(getDistance(x, y, marker.getDrawingPoint().x, marker.getDrawingPoint().y - HEIGHT) < THRESHOLD_DISTANCE) {
+                        if(Utils.getDistance(x, y, marker.getDrawingPoint().x, marker.getDrawingPoint().y - HEIGHT+paddingTop) < THRESHOLD_DISTANCE) {
                             MainActivity.dayEatingData = marker.dayEatingData;
                             openActivity3();
                             marker.setDrawingPoint(-1.f, -1.f);
@@ -130,8 +134,9 @@ public class MainActivity extends AppCompatActivity {
         List<Entry> data = new ArrayList<>();
         int amount = 100;
         for (int i = 0; i < amount; ++i) {
-            Entry e = new Entry(i, (float) Math.random() * 10);
-
+            Entry e = new Entry(i, (float)(Math.random() * 10));
+            if(i == 3)
+                e.setY(10f);
             //Simple testing
             List<Meal> meals = new ArrayList<>();
             meals.add(new Meal("3 st Ägg", null, e.getY(), 215, 0, 14, 19));
@@ -236,10 +241,6 @@ public class MainActivity extends AppCompatActivity {
     public void openActivity3(){
         Intent intent = new Intent(this, MainActivity3.class);
         startActivity(intent);
-    }
-
-    public static float getDistance(float x1, float y1, float x2, float y2) {
-        return (float)Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
     }
 }
 
