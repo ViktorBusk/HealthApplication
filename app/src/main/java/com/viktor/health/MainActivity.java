@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     //Touch
     private static final float THRESHOLD_DISTANCE = 64.f;
     private static final float HEIGHT = 96.f;
+    private static final float CHART_DRAW_HEIGHT = 172.07f;
     //Chart
     private List<Entry> data;
     private final int amount = 100;
@@ -120,17 +121,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 customListener.onTouch(v, event);
+
                 float x = event.getX();
                 float y = event.getY();
-
                 float paddingTop = 0f;
 
-                if(marker.getDrawingPoint().y <= 172.07f)
-                    paddingTop+=(172.07f - marker.getDrawingPoint().y);
+                if(marker.getDrawingPoint().y <= CHART_DRAW_HEIGHT)
+                    paddingTop += (CHART_DRAW_HEIGHT - marker.getDrawingPoint().y);
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        if(Utils.getDistance(x, y, marker.getDrawingPoint().x, marker.getDrawingPoint().y - HEIGHT+paddingTop) < THRESHOLD_DISTANCE) {
+                        if(Utils.getDistance(x, y, marker.getDrawingPoint().x, marker.getDrawingPoint().y - HEIGHT + paddingTop) < THRESHOLD_DISTANCE) {
                             MainActivity.dayEatingData = marker.dayEatingData;
                             openActivity3();
                             marker.setDrawingPoint(-1.f, -1.f);
