@@ -57,7 +57,13 @@ public class MainActivity extends AppCompatActivity {
     public static TextView sticky;
     public static CustomMarkerView marker;
 
-    public static final float THRESHOLD_DISTANCE = 70.f;
+    //Colors
+    public static int primaryColorDark;
+    public static int primaryColor;
+    public static  int colorAccent;
+
+    //Touch
+    public static final float THRESHOLD_DISTANCE = 64.f;
     public static final float HEIGHT = 100.f;
 
     @Override
@@ -110,15 +116,15 @@ public class MainActivity extends AppCompatActivity {
         //Init colors from XML-file
         TypedValue typedValue = new TypedValue();
         getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
-        final int primaryColorDark = typedValue.data;
+         primaryColorDark = typedValue.data;
 
         typedValue = new TypedValue();
         getTheme().resolveAttribute(R.attr.colorPrimary, typedValue, true);
-        final int primaryColor = typedValue.data;
+        primaryColor = typedValue.data;
 
         typedValue = new TypedValue();
         getTheme().resolveAttribute(R.attr.colorAccent, typedValue, true);
-        final int colorAccent = typedValue.data;
+        colorAccent = typedValue.data;
 
         //Add data to list
         List<Entry> data = new ArrayList<>();
