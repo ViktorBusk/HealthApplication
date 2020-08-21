@@ -28,6 +28,8 @@ import com.github.mikephil.charting.data.LineDataSet;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO: add animations
+
 public class MainActivity extends AppCompatActivity {
     //Views
     public static DayEatingData dayEatingData;

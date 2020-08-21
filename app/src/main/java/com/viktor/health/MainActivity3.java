@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+//TODO: add animations
+
 public class MainActivity3 extends AppCompatActivity {
 
     @Override
