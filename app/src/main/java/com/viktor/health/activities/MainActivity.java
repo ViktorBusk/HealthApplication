@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.viktor.health.R;
+import com.viktor.health.data.DayData;
+import com.viktor.health.data.DayLifeData;
 import com.viktor.health.utils.Utils;
 import com.viktor.health.chart.CustomMarkerView;
 import com.viktor.health.chart.StickyDateAxisValueFormatter;
@@ -39,7 +41,7 @@ import com.viktor.health.data.Meal;
 
 public class MainActivity extends AppCompatActivity {
     //Views
-    public static DayEatingData dayEatingData;
+    public static DayData dayData;
     public static ConstraintLayout layout;
     public static Button button;
     public static LineChart chart;
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //TODO: load all the data from firebase
         initActivity();
     }
 
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         setDataToChart();
         //Axes
         initXAxis();
-        initYaxis();
+        initYAxis();
         //Chart
         initChart();
     }
@@ -141,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if(Utils.getDistance(x, y, marker.getDrawingPoint().x, marker.getDrawingPoint().y - HEIGHT + paddingTop) < THRESHOLD_DISTANCE) {
-                            MainActivity.dayEatingData = marker.dayEatingData;
+                            MainActivity.dayData = marker.dayData;
                             openActivity3();
                             marker.setDrawingPoint(-1.f, -1.f);
                         }
@@ -158,8 +160,12 @@ public class MainActivity extends AppCompatActivity {
             Entry e = new Entry(i, (float)(Math.random() * 10));
             //Simple testing
             List<Meal> meals = new ArrayList<>();
-            meals.add(new Meal("3 st Ägg", null, e.getY(), 215, 0, 14, 19));
-            e.setData(new DayEatingData(meals.toArray(new Meal[0])));
+            meals.add(new Meal("This is the description!", null, e.getY(), (int)(Math.random()*3000), (int)(Math.random()*100), (int)(Math.random()*200), (int)(Math.random()*200)));
+
+            //DayData
+            e.setData(new DayData(new DayEatingData(meals.toArray(new Meal[0])), new DayLifeData( (int)(Math.random()*2),
+                    "Running 4km", (int)(Math.round(Math.random()*10)),
+                    (int)(Math.random()*3), "", null)));
             data.add(e);
         }
     }
@@ -207,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
         xa.setDrawGridLines(true);
     }
 
-    private void initYaxis() {
+    private void initYAxis() {
         //Y-axis
         ya = chart.getAxisLeft();
         ya.setAxisMaxValue(10.f);

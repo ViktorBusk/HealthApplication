@@ -11,6 +11,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.MPPointF;
 
 import com.viktor.health.R;
+import com.viktor.health.data.DayData;
 import com.viktor.health.utils.Utils;
 import com.viktor.health.data.DayEatingData;
 
@@ -18,7 +19,7 @@ public class CustomMarkerView extends MarkerView {
 
     private TextView tvContent;
     private MPPointF drawingPoint;
-    public DayEatingData dayEatingData;
+    public DayData dayData;
 
     public CustomMarkerView(Context context, int layoutResource) {
         super(context, layoutResource);
@@ -36,7 +37,7 @@ public class CustomMarkerView extends MarkerView {
         this.setX(e.getX());
         drawingPoint.x = highlight.getDrawX();
         drawingPoint.y = highlight.getDrawY();
-        dayEatingData = (DayEatingData) e.getData();
+        dayData = (DayData) e.getData();
         formatText();
         super.refreshContent(e, highlight);
     }
@@ -66,17 +67,17 @@ public class CustomMarkerView extends MarkerView {
     public void formatText() {
         //tvContent.setText(String.format("%.1f", dayEatingData.painLevel));
         //From green to yellow
-        if (dayEatingData.painLevel < 5) {
+        if (dayData.dayEatingData.painLevel < 5) {
             int startColor = ContextCompat.getColor(getContext(), R.color.startColor);
             int endColor = ContextCompat.getColor(getContext(), R.color.centerColor);
-            float ratio = Utils.map(dayEatingData.painLevel, 0, 5, 0, 10)/10;
+            float ratio = Utils.map(dayData.dayEatingData.painLevel, 0, 5, 0, 10)/10;
             //tvContent.getBackground().setColorFilter(ColorUtils.blendARGB(startColor, endColor, ratio), PorterDuff.Mode.MULTIPLY);
         }
         //From yellow to red
         else {
             int startColor = ContextCompat.getColor(getContext(), R.color.centerColor);
             int endColor = ContextCompat.getColor(getContext(), R.color.endColor);
-            float ratio = Utils.map(dayEatingData.painLevel, 5, 10, 0, 10)/10;
+            float ratio = Utils.map(dayData.dayEatingData.painLevel, 5, 10, 0, 10)/10;
             //tvContent.getBackground().setColorFilter(ColorUtils.blendARGB(startColor, endColor, ratio), PorterDuff.Mode.MULTIPLY);
         }
     }

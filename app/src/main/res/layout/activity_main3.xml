@@ -21,7 +21,7 @@
 
             <TextView
                 android:id="@+id/txtDashboard"
-                android:text="Day Information"
+                android:text="More Information"
                 android:textSize="30sp"
                 android:textColor="#ffffff"
                 android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
             <TextView
                 android:layout_marginTop="6dp"
                 android:layout_below="@+id/txtDashboard"
-                android:text="How did you feel?"
+                android:text="Data about the day: "
                 android:textStyle="italic"
                 android:textSize="20sp"
                 android:textColor="#ffffff"
@@ -38,11 +38,13 @@
                 android:layout_height="wrap_content"></TextView>
 
             <ImageView
+                android:id="@+id/mealsImageView"
                 android:layout_marginTop="6dp"
                 android:layout_alignParentRight="true"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@drawable/icons8_bar_chart_3d_64"></ImageView>
+                android:clickable="true"
+                android:src="@drawable/icons8_meal_64"></ImageView>
         </RelativeLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -66,8 +68,8 @@
         android:rowCount="4">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_row="0"
             android:layout_rowWeight="1"
             android:layout_column="0"
@@ -90,18 +92,21 @@
                     android:src="@drawable/icons8_calories_100" />
 
                 <TextView
+                    android:id="@+id/caloriesTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="CALORIES: "
                     android:textAlignment="center"
                     android:textStyle="bold"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
                     android:gravity="center_horizontal" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_row="0"
             android:layout_rowWeight="1"
             android:layout_column="1"
@@ -124,18 +129,21 @@
                     android:src="@drawable/icons8_protein_100" />
 
                 <TextView
+                    android:id="@+id/fatTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="FAT: "
                     android:textAlignment="center"
                     android:textStyle="bold"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
                     android:gravity="center_horizontal" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_row="1"
             android:layout_rowWeight="1"
             android:layout_column="0"
@@ -158,18 +166,21 @@
                     android:src="@drawable/icons8_bacon_100" />
 
                 <TextView
+                    android:id="@+id/proteinTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="PROTEIN: "
                     android:textAlignment="center"
                     android:textStyle="bold"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
                     android:gravity="center_horizontal" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_row="1"
             android:layout_rowWeight="1"
             android:layout_column="1"
@@ -192,18 +203,21 @@
                     android:src="@drawable/icons8_sugar_cubes_100" />
 
                 <TextView
+                    android:id="@+id/carbsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="CARBS: "
                     android:textAlignment="center"
                     android:textStyle="bold"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
                     android:gravity="center_horizontal" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_row="2"
             android:layout_rowWeight="1"
             android:layout_column="0"
@@ -226,18 +240,21 @@
                     android:src="@drawable/icons8_bed_100" />
 
                 <TextView
+                    android:id="@+id/sleepTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SLEEP: "
                     android:textAlignment="center"
                     android:textStyle="bold"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
                     android:gravity="center_horizontal" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_row="2"
             android:layout_rowWeight="1"
             android:layout_column="1"
@@ -260,18 +277,33 @@
                     android:src="@drawable/icons8_bowel_flush_100" />
 
                 <TextView
+                    android:id="@+id/bowelMovementsTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="BOWEL MOVENTS: "
                     android:textAlignment="center"
                     android:textStyle="bold"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/bowelMovementsTextViewDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below = "@id/bowelMovementsTextView"
+                    android:text="Description"
+                    android:textAlignment="center"
+                    android:textStyle="bold|italic"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
                     android:gravity="center_horizontal" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_row="3"
             android:layout_rowWeight="0"
             android:layout_column="0"
@@ -294,18 +326,34 @@
                     android:src="@drawable/icons8_jump_rope_100" />
 
                 <TextView
+                    android:id="@+id/exerciseTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="EXCERISE: "
+                    android:text="EXERCISE: "
                     android:textAlignment="center"
                     android:textStyle="bold"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
                     android:gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/exerciseTextViewDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below = "@id/exerciseTextView"
+                    android:text="Description"
+                    android:textAlignment="center"
+                    android:textStyle="bold|italic"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:gravity="center_horizontal" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_row="3"
             android:layout_rowWeight="1"
             android:layout_column="1"
@@ -328,11 +376,13 @@
                     android:src="@drawable/icons8_depression_100" />
 
                 <TextView
+                    android:id="@+id/mentalTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="MENTAL: "
                     android:textAlignment="center"
                     android:textStyle="bold"
+                    android:padding="12dp"
                     android:gravity="center_horizontal" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
