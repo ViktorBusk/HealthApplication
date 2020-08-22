@@ -4,9 +4,11 @@
     <color name="colorPrimary">#98254B</color>
     <color name="colorPrimaryDark">#5D9A97</color>
     <color name="colorAccent">#E17364</color>
+    <color name="white">#FFFFFF</color>
 
     <!--Gradient colors-->
     <color name="startColor">#BF4AC35A</color>
     <color name="centerColor">#BFFFEB3B</color>
     <color name="endColor">#BFFF0000</color>
+
 </resources>

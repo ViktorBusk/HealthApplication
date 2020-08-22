@@ -3,9 +3,12 @@ package com.viktor.health.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.viktor.health.R;
@@ -18,7 +21,9 @@ public class MainActivity3 extends AppCompatActivity {
 
     public static DayData dayData;
 
+    public static RelativeLayout container;
     public static ImageView mealsViewImage; //TODO: should be clickable and display DayEatingData
+    public static AnimationDrawable anim;
 
     public static TextView caloriesTextView;
     public static TextView fatTextView;
@@ -43,17 +48,27 @@ public class MainActivity3 extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         loadDayInformation();
+        animationOnResume();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        animationOnPause();
     }
 
     private void init()
     {
         initViews();
+        initAnimation();
     }
 
     private void initViews()
     {
-        //ImageView
+        //Containers
+        container = (RelativeLayout) findViewById(R.id.containerActivity3);
         mealsViewImage = (ImageView) findViewById(R.id.mealsImageView);
+
         //TextViews
         caloriesTextView = (TextView) findViewById(R.id.caloriesTextView);
         fatTextView = (TextView) findViewById(R.id.fatTextView);
@@ -66,6 +81,24 @@ public class MainActivity3 extends AppCompatActivity {
         //Descriptions
         bowelMovementsTextViewDescription = (TextView) findViewById(R.id.bowelMovementsTextViewDescription);
         exerciseTextViewDescription = (TextView) findViewById(R.id.exerciseTextViewDescription);
+    }
+
+    private void initAnimation()
+    {
+        anim = (AnimationDrawable) container.getBackground();
+        anim.setEnterFadeDuration(6000);
+        anim.setExitFadeDuration(2000);
+    }
+
+    private void animationOnResume()
+    {
+        if (anim != null && !anim.isRunning())
+            anim.start();
+    }
+
+    private void animationOnPause(){
+        if (anim != null && anim.isRunning())
+            anim.stop();
     }
 
     private void loadDayInformation()
