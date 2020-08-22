@@ -38,7 +38,6 @@ public class CustomMarkerView extends MarkerView {
         drawingPoint.x = highlight.getDrawX();
         drawingPoint.y = highlight.getDrawY();
         dayData = (DayData) e.getData();
-        formatText();
         super.refreshContent(e, highlight);
     }
 
@@ -62,23 +61,5 @@ public class CustomMarkerView extends MarkerView {
     public void setDrawingPoint(float x, float y) {
         drawingPoint.x = x;
         drawingPoint.y = y;
-    }
-
-    public void formatText() {
-        //tvContent.setText(String.format("%.1f", dayEatingData.painLevel));
-        //From green to yellow
-        if (dayData.dayEatingData.painLevel < 5) {
-            int startColor = ContextCompat.getColor(getContext(), R.color.startColor);
-            int endColor = ContextCompat.getColor(getContext(), R.color.centerColor);
-            float ratio = Utils.map(dayData.dayEatingData.painLevel, 0, 5, 0, 10)/10;
-            //tvContent.getBackground().setColorFilter(ColorUtils.blendARGB(startColor, endColor, ratio), PorterDuff.Mode.MULTIPLY);
-        }
-        //From yellow to red
-        else {
-            int startColor = ContextCompat.getColor(getContext(), R.color.centerColor);
-            int endColor = ContextCompat.getColor(getContext(), R.color.endColor);
-            float ratio = Utils.map(dayData.dayEatingData.painLevel, 5, 10, 0, 10)/10;
-            //tvContent.getBackground().setColorFilter(ColorUtils.blendARGB(startColor, endColor, ratio), PorterDuff.Mode.MULTIPLY);
-        }
     }
 }

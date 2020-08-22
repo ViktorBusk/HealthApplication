@@ -1,6 +1,7 @@
 package com.viktor.health.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.viktor.health.R;
 import com.viktor.health.data.DayData;
+import com.viktor.health.utils.Utils;
 
 //TODO: add animations, add dayEatingData to views
 
@@ -39,8 +41,8 @@ public class MainActivity3 extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        loadDayInformation();
         super.onResume();
+        loadDayInformation();
     }
 
     private void init()
@@ -66,7 +68,7 @@ public class MainActivity3 extends AppCompatActivity {
         exerciseTextViewDescription = (TextView) findViewById(R.id.exerciseTextViewDescription);
     }
 
-    public static void loadDayInformation()
+    private void loadDayInformation()
     {
         dayData = MainActivity.dayData;
         caloriesTextView.setText("CALORIES: "+dayData.dayEatingData.calories);
@@ -79,5 +81,23 @@ public class MainActivity3 extends AppCompatActivity {
         exerciseTextView.setText("EXERCISE: "+dayData.lifeData.exercise);
         exerciseTextViewDescription.setText(dayData.lifeData.exerciseDescription);
         mentalTextView.setText("MENTAL: "+dayData.lifeData.mental);
+    }
+
+    private void formatText() {
+        //tvContent.setText(String.format("%.1f", dayEatingData.painLevel));
+        //From green to yellow
+        if (dayData.dayEatingData.painLevel < 5) {
+            int startColor = ContextCompat.getColor(this, R.color.startColor);
+            int endColor = ContextCompat.getColor(this, R.color.centerColor);
+            float ratio = Utils.map(dayData.dayEatingData.painLevel, 0, 5, 0, 10)/10;
+            //tvContent.getBackground().setColorFilter(ColorUtils.blendARGB(startColor, endColor, ratio), PorterDuff.Mode.MULTIPLY);
+        }
+        //From yellow to red
+        else {
+            int startColor = ContextCompat.getColor(this, R.color.centerColor);
+            int endColor = ContextCompat.getColor(this, R.color.endColor);
+            float ratio = Utils.map(dayData.dayEatingData.painLevel, 5, 10, 0, 10)/10;
+            //tvContent.getBackground().setColorFilter(ColorUtils.blendARGB(startColor, endColor, ratio), PorterDuff.Mode.MULTIPLY);
+        }
     }
 }
