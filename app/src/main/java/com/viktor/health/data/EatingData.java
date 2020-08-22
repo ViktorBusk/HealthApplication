@@ -1,4 +1,4 @@
-package com.viktor.health;
+package com.viktor.health.data;
 
 abstract class EatingData {
     public float painLevel;

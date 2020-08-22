@@ -1,4 +1,4 @@
-package com.viktor.health;
+package com.viktor.health.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

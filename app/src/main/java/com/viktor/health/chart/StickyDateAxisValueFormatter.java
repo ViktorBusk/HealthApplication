@@ -1,4 +1,4 @@
-package com.viktor.health;
+package com.viktor.health.chart;
 
 import android.widget.TextView;
 
@@ -25,7 +25,7 @@ public class StickyDateAxisValueFormatter implements IAxisValueFormatter {
     private SimpleDateFormat monthFormatter = new SimpleDateFormat("MMM", Locale.getDefault());
 
 
-    StickyDateAxisValueFormatter(LineChart chart, TextView sticky) {
+    public StickyDateAxisValueFormatter(LineChart chart, TextView sticky) {
         c = new GregorianCalendar();
         this.chart = chart;
         this.sticky = sticky;

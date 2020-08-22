@@ -1,30 +1,18 @@
-package com.viktor.health;
+package com.viktor.health.chart;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.Rect;
-import android.media.Image;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.ColorUtils;
 
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.MPPointF;
+
+import com.viktor.health.R;
+import com.viktor.health.utils.Utils;
+import com.viktor.health.data.DayEatingData;
 
 public class CustomMarkerView extends MarkerView {
 

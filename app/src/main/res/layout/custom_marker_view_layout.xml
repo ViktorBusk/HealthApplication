@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="84dp"
     android:layout_height="84dp"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
     <TextView
         android:background="@drawable/icons8_view_details_96"
         android:rotation="180"

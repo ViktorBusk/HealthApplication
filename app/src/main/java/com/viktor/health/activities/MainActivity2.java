@@ -1,8 +1,10 @@
-package com.viktor.health;
+package com.viktor.health.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.viktor.health.R;
 
 //TODO: Add animations, add time- and date-picker, add number-picker for values, save data to FireBase
 

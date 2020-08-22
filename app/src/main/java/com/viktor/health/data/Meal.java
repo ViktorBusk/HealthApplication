@@ -1,4 +1,4 @@
-package com.viktor.health;
+package com.viktor.health.data;
 
 import android.widget.TimePicker;
 

@@ -1,4 +1,4 @@
-package com.viktor.health;
+package com.viktor.health.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -27,6 +27,13 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.viktor.health.R;
+import com.viktor.health.utils.Utils;
+import com.viktor.health.chart.CustomMarkerView;
+import com.viktor.health.chart.StickyDateAxisValueFormatter;
+import com.viktor.health.data.DayEatingData;
+import com.viktor.health.data.Meal;
 
 //TODO: add animations, load data from FireBase
 

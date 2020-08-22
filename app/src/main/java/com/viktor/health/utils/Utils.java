@@ -1,11 +1,11 @@
-package com.viktor.health;
+package com.viktor.health.utils;
 
 import android.view.View;
 import android.view.ViewTreeObserver;
 
 public abstract class Utils {
 
-    static float map(float value, float start1, float stop1, float start2, float stop2) {
+    public static float map(float value, float start1, float stop1, float start2, float stop2) {
         float outgoing = start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
         return outgoing;
     }

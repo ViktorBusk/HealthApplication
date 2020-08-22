@@ -1,4 +1,4 @@
-package com.viktor.health;
+package com.viktor.health.data;
 
 public class DayEatingData extends EatingData {
     public Meal[] meals;
